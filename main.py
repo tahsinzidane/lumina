@@ -1,6 +1,8 @@
 import subprocess
 import sys
 import os
+import shutil
+import random
 from prompt_toolkit import PromptSession
 from prompt_toolkit.styles import Style
 from core.suggester import LuminaSuggester
@@ -8,10 +10,20 @@ from core.storage import save_command
 
 # Aesthetic styling for the terminal
 lumina_style = Style.from_dict({
-    'auto-suggestion': '#666666 italic', # Ghost text color
-    'prompt': '#00ff00 bold',            # Green prompt
-    'path': '#00afff',                   # Cyan for directory path
+    'auto-suggestion': '#666666 italic', 
+    'prompt': '#00ff00 bold',            
+    'path': '#00afff',                   
 })
+
+# roasts for failed commands
+ROASTS = [
+    "L + Ratio + ssssskill issue",
+    "Aura depleted. Command not found.",
+    "Bros trying to run a ghost command 💀",
+    "Invalid input. Go touch grass.",
+    "Check your spelling, no cap.",
+    "Negative Aura detected. Fix your command."
+]
 
 def main():
     session = PromptSession(
@@ -23,36 +35,30 @@ def main():
     
     while True:
         try:
-            # Get current directory and shorten Home path to '~'
+            # Dynamic Prompt Path
             current_dir = os.getcwd().replace(os.path.expanduser("~"), "~")
-            
-            # Create a dynamic prompt: [path] lumina ❯ 
-            # We use a list of style tuples for prompt_toolkit
             prompt_tokens = [
                 ('class:path', f'[{current_dir}] '),
                 ('class:prompt', 'lumina ❯ '),
             ]
             
+            # Get Input
             user_input = session.prompt(prompt_tokens)
             
-            # Handle empty input
             if not user_input.strip():
                 continue
 
-            # Internal commands to quit
             if user_input.lower() in ['exit', 'quit']:
                 break
 
-            # Save command to history (JSON)
+            # Persistence & Parsing
             save_command(user_input)
-            
-            # Handle Built-in Commands (manual override)
             parts = user_input.split()
             command = parts[0]
 
+            # Built-in Overrides
             if command == "cd":
                 try:
-                    # Move to path or home if no args
                     path = parts[1] if len(parts) > 1 else os.path.expanduser("~")
                     os.chdir(path)
                 except Exception as e:
@@ -60,21 +66,25 @@ def main():
                 continue
 
             if command == "clear":
-                # Clear terminal screen properly
                 print("\033[H\033[J", end="")
                 continue
 
-            # Execute all other system commands via Subprocess
+            # Execution & Skill Issue Check
             try:
-                subprocess.run(user_input, shell=True)
+                # Check if the command exists before running
+                if shutil.which(command) is None:
+                    print(f"❌ {random.choice(ROASTS)}: '{command}'")
+                else:
+                    # Run the actual system command
+                    subprocess.run(user_input, shell=True)
             except Exception as e:
                 print(f"Execution Error: {e}")
                 
         except KeyboardInterrupt:
-            print("") # New line on Ctrl+C
+            print("") 
             continue 
         except EOFError:
-            break    # Handle Ctrl+D
+            break    
 
 if __name__ == "__main__":
     main()
