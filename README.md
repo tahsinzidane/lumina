@@ -10,6 +10,10 @@
 * **Aesthetic UI:** Minimalist prompt design with a focus on readability and "Gen Z" aesthetics.
 * **Modular Architecture:** Clean separation of concerns between storage, logic, and execution.
 
+## 🔥 Preview
+<img src="./previews/preview0.png">
+<img src="./previews/preview1.png">
+
 ## 🛠️ Installation
 
 1. **Clone the repository:**
