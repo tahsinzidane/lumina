@@ -33,7 +33,6 @@ def main():
                 ('class:prompt', 'lumina ❯ '),
             ]
             
-            # 1. Capture User Input
             user_input = session.prompt(prompt_tokens)
             
             # Handle empty input
@@ -44,10 +43,10 @@ def main():
             if user_input.lower() in ['exit', 'quit']:
                 break
 
-            # 2. Save command to history (JSON)
+            # Save command to history (JSON)
             save_command(user_input)
             
-            # 3. Handle Built-in Commands (manual override)
+            # Handle Built-in Commands (manual override)
             parts = user_input.split()
             command = parts[0]
 
@@ -58,14 +57,14 @@ def main():
                     os.chdir(path)
                 except Exception as e:
                     print(f"cd: {e}")
-                continue # Skip subprocess, we handled it manually
+                continue
 
             if command == "clear":
                 # Clear terminal screen properly
                 print("\033[H\033[J", end="")
                 continue
 
-            # 4. Execute all other system commands via Subprocess
+            # Execute all other system commands via Subprocess
             try:
                 subprocess.run(user_input, shell=True)
             except Exception as e:
