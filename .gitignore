@@ -1,0 +1,12 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Database file (Lumina history should be local to the user)
+history.json
+.lumina_history.json
+
+# Environment variables / OS files
+.DS_Store
+.env
