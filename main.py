@@ -7,6 +7,7 @@ from prompt_toolkit import PromptSession
 from prompt_toolkit.styles import Style
 from core.suggester import LuminaSuggester
 from core.storage import save_command
+from core.commands import handle_args
 
 # Aesthetic styling for the terminal
 lumina_style = Style.from_dict({
@@ -26,6 +27,7 @@ ROASTS = [
 ]
 
 def main():
+    handle_args()
     session = PromptSession(
         auto_suggest=LuminaSuggester(),
         style=lumina_style
