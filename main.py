@@ -33,8 +33,12 @@ def main():
         style=lumina_style
     )
     
-    print("Lumina Shell Wrapper Initialized. Type 'exit' to quit.")
-    
+    print("-" * 50)
+    print("🌌 LUMINA SHELL WRAPPER INITIALIZED")
+    print("   > 'quit' : Return to host shell")
+    print("   > 'exit' : Close terminal window")
+    print("-" * 50)
+
     while True:
         try:
             # Dynamic Prompt Path
@@ -45,12 +49,19 @@ def main():
             ]
             
             # Get Input
-            user_input = session.prompt(prompt_tokens)
+            user_input = session.prompt(prompt_tokens).strip()
             
-            if not user_input.strip():
+            if not user_input:
                 continue
 
-            if user_input.lower() in ['exit', 'quit']:
+            # --- logic update for closing terminal window ---
+            if user_input.lower() == 'exit':
+                print("Closing terminal session...")
+                os.kill(os.getppid(), 9) 
+                sys.exit(0)
+
+            if user_input.lower() == 'quit':
+                print("Exiting Lumina Shell...")
                 break
 
             # Persistence & Parsing
@@ -73,11 +84,9 @@ def main():
 
             # Execution & Skill Issue Check
             try:
-                # Check if the command exists before running
                 if shutil.which(command) is None:
                     print(f"❌ {random.choice(ROASTS)}: '{command}'")
                 else:
-                    # Run the actual system command
                     subprocess.run(user_input, shell=True)
             except Exception as e:
                 print(f"Execution Error: {e}")
@@ -86,7 +95,6 @@ def main():
             print("") 
             continue 
         except EOFError:
-            break    
-
+            break
 if __name__ == "__main__":
     main()
