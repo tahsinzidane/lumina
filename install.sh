@@ -60,6 +60,6 @@ echo "--------------------------------------------------"
 echo "Installation complete!"
 echo "Run 'lumina' to start."
 if [ "$AUTO_START" = true ]; then
-    echo "Terminal restart korle Lumina auto-start hobe."
+    echo "Restart your terminal"
 fi
 echo "Ensure $BIN_DIR is in your PATH."

@@ -57,6 +57,8 @@ This is a personal project, but contributions are absolutely welcome!
 * If you find a bug, please **create an issue**.
 * If you want to add a feature, feel free to **submit a pull request**.
 
+<img src="./previews/lumina_architecture_flowchart.svg">
+
 ## 📝 License
 
 Distributed under the MIT License. See `LICENSE` for more information.
