@@ -3,7 +3,7 @@ import sys
 def handle_args():
     # Simple dictionary for version and author info
     INFO = {
-        "version": "Lumina Shell v0.2.1",
+        "version": "Lumina Shell v1.2.1",
         "author": "Tahsin Zidane (@tahsinzidane)",
         "help": """
 Lumina - Aesthetic Shell Wrapper
